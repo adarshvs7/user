@@ -1,7 +1,7 @@
 const { validationResult, body } = require('express-validator');
 const APIError = require('../errors/APIError');
 const db = require('../db');
-const jwtAuth = require('./jwt-auth');
+const jwtAuth = require('../authentication/jwt-auth');
 const { apiFmt } = require('../services/formatter');
 const bcrypt = require('bcryptjs');
 
@@ -10,9 +10,12 @@ const bcrypt = require('bcryptjs');
 async function update(req, res, next) {
     try {
         validateRequest(req);
-        const user = req.user;
-        const response = await db.updateWithCondition('user', {id:user.id},{...req.body})
-        userUpdate = {...user,...req.body}
+        let user = req.user;
+        let body=req.body
+        body.password = await generateSalt(body.password);
+        const response = await db.updateWithCondition('user', {id:user.id},{...body})
+        userUpdate = {...user,...body}
+        console.log(userUpdate)
         const idToken = jwtAuth.generateToken(userUpdate, process.env.JWT_KEY);
         res.json(apiFmt({user:userUpdate,idToken}, "update Success"));
     } catch (e) {
@@ -20,6 +23,12 @@ async function update(req, res, next) {
         next(e);
     }
 }
+
+async function generateSalt(password) {
+    let salt = await bcrypt.genSalt();
+    return await bcrypt.hash(password.toString(), salt);
+}
+
 function validateRequest(req) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
