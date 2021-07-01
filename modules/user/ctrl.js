@@ -16,6 +16,7 @@ async function update(req, res, next) {
         const response = await db.updateWithCondition('user', {id:user.id},{...body})
         userUpdate = {...user,...body}
         console.log(userUpdate)
+        delete userUpdate.exp,userUpdate.iat
         const idToken = jwtAuth.generateToken(userUpdate, process.env.JWT_KEY);
         res.json(apiFmt({user:userUpdate,idToken}, "update Success"));
     } catch (e) {
