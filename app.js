@@ -9,10 +9,12 @@ const port = process.env.PORT || 3000;
 var cors = require('cors')
 const authentication = require('./modules/authentication/router');
 const { idMiddleware } = require('./modules/authentication/middleware');
+const user = require('./modules/user/router');
 
 app.use(cors({ origin: '*' }))
 app.use(baseUrl, authentication);
 app.use(idMiddleware);
+app.use(baseUrl, user);
 
 
 const error = require('./modules/errors/middleware');

@@ -14,8 +14,8 @@ function verifyToken(token, secretOrPem, ignore = false) {
 
 function generateToken(payload, secretOrPem) {
     let token;
-    if (expiry) token = jwt.sign(payload, secretOrPem, { expiresIn: '8h' });
-    else token = jwt.sign(payload, secretOrPem);
+    token = jwt.sign({...payload}, secretOrPem, { expiresIn: '8h' });
+    console.log(token)
     return token;
 }
 

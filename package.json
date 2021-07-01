@@ -1,0 +1,33 @@
+{
+  "name": "user",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "knex": "knex --knexfile modules/db/knexfile.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adarshvs7/user.git"
+  },
+  "author": "Adarsh Surendran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adarshvs7/user/issues"
+  },
+  "homepage": "https://github.com/adarshvs7/user#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.0",
+    "http": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.95.6",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.9"
+  }
+}
